@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-list Veicular ASR</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  padding: 10px;
+}
+h2 {
+  text-align: center;
+  background: #444;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+}
+h3 {
+  background: #666;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+}
+.section {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.item {
+  margin-bottom: 8px;
+}
+select, input, textarea, button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  font-size: 15px;
+}
+.nc {
+  border: 2px solid red;
+}
+button {
+  background: #25D366;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+}
+small {
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<h2>CHECK-LIST VEICULAR – ASR</h2>
+
+<div class="section">
+<label>Data / Hora</label>
+<input id="data" readonly>
+
+<label>Condutor</label>
+<input id="condutor" required>
+
+<label>Placa</label>
+<input id="placa" required>
+
+<label>Hodômetro</label>
+<input id="hodometro" type="number" required>
+</div>
+
+<script>
+document.getElementById("data").value =
+  new Date().toLocaleString("pt-BR");
+</script>
+
+<!-- FUNÇÃO PARA MARCAR NC -->
+<script>
+function verificaNC(select){
+  if(select.value === "NC"){
+    select.classList.add("nc");
+    document.getElementById("obs").required = true;
+  } else {
+    select.classList.remove("nc");
+  }
+}
+</script>
+
+<div class="section">
+<h3>1️⃣ MOTOR</h3>
+<div class="item">Nível de óleo
+<select onchange="verificaNC(this)" id="oleo">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Nível de água
+<select onchange="verificaNC(this)" id="agua">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Vazamentos
+<select onchange="verificaNC(this)" id="vaz">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Correia do motor
+<select onchange="verificaNC(this)" id="correia">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+</div>
+
+<div class="section">
+<h3>2️⃣ SISTEMA ELÉTRICO</h3>
+<div class="item">Painel
+<select onchange="verificaNC(this)" id="painel">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Faróis / Lanternas
+<select onchange="verificaNC(this)" id="farois">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Setas
+<select onchange="verificaNC(this)" id="setas">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Buzina
+<select onchange="verificaNC(this)" id="buzina">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+</div>
+
+<div class="section">
+<h3>3️⃣ CABINE</h3>
+<div class="item">Limpeza
+<select onchange="verificaNC(this)" id="limpeza">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Cinto de segurança
+<select onchange="verificaNC(this)" id="cinto">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+
+<div class="item">Extintor
+<select onchange="verificaNC(this)" id="extintor">
+<option>OK</option><option>NC</option><option>OB</option>
+</select></div>
+</div>
+
+<div class="section">
+<h3>📝 OBSERVAÇÕES (obrigatório se NC)</h3>
+<textarea id="obs" placeholder="Descreva o problema encontrado"></textarea>
+<small>* Se marcar NC, este campo deve ser preenchido</small>
+</div>
+
+<button onclick="enviar()">📲 ENVIAR CHECK-LIST</button>
+
+<script>
+function enviar(){
+  if(!condutor.value || !placa.value || !hodometro.value){
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+  }
+
+  let texto =
+`🚛 CHECK-LIST VEICULAR – ASR
+
+📅 ${data.value}
+👤 Condutor: ${condutor.value}
+🚚 Placa: ${placa.value}
+📏 Hodômetro: ${hodometro.value}
+
+MOTOR
+- Óleo: ${oleo.value}
+- Água: ${agua.value}
+- Vazamentos: ${vaz.value}
+- Correia: ${correia.value}
+
+ELÉTRICO
+- Painel: ${painel.value}
+- Faróis: ${farois.value}
+- Setas: ${setas.value}
+- Buzina: ${buzina.value}
+
+CABINE
+- Limpeza: ${limpeza.value}
+- Cinto: ${cinto.value}
+- Extintor: ${extintor.value}
+
+OBSERVAÇÕES:
+${obs.value || "Sem observações"}
+`;
+
+  let numero = "5575999999999"; // WHATSAPP DA EMPRESA
+  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
