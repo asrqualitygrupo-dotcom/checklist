@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-list Veicular ASR</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+  padding:10px;
+}
+h2{
+  background:#333;
+  color:#fff;
+  padding:10px;
+  border-radius:6px;
+  text-align:center;
+}
+.section{
+  background:#fff;
+  margin-bottom:10px;
+  border-radius:6px;
+  padding:10px;
+}
+.section h3{
+  margin:0;
+  cursor:pointer;
+}
+.content.hidden{display:none;}
+.item{margin-top:10px;}
+.buttons{
+  display:flex;
+  gap:8px;
+  margin-top:5px;
+}
+.btn{
+  flex:1;
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+.btn.ok{background:#e8f5e9;}
+.btn.nc{background:#fdecea;}
+.btn.na{background:#eee;}
+.btn.active.ok{background:#2ecc71;color:#fff;}
+.btn.active.nc{background:#e74c3c;color:#fff;}
+.btn.active.na{background:#9e9e9e;color:#fff;}
+.obs{display:none;margin-top:6px;}
+textarea,input{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+}
+button{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  background:#25D366;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+}
+.progress{
+  margin:10px 0;
+  font-size:14px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>CHECK-LIST VEICULAR – ASR</h2>
+
+<div class="section">
+  <b>Nº Check-list:</b> <span id="numChecklist"></span><br>
+  <b>Data/Hora:</b> <span id="dataHora"></span>
+</div>
+
+<div class="section">
+<label>Condutor</label>
+<input id="condutor" required>
+
+<label>Placa</label>
+<input id="placa" required>
+
+<label>Hodômetro</label>
+<input id="hodometro" type="number" required>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<div id="checklist">
+
+<!-- MOTOR -->
+<div class="section">
+<h3 onclick="toggle(this)">🚛 MOTOR</h3>
+<div class="content">
+  <div class="item" data-item>Óleo
+    <div class="buttons">
+      <div class="btn ok" onclick="select(this,'OK')">OK</div>
+      <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    </div>
+    <textarea class="obs" placeholder="Descreva o problema"></textarea>
+  </div>
+
+  <div class="item" data-item>Água
+    <div class="buttons">
+      <div class="btn ok" onclick="select(this,'OK')">OK</div>
+      <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    </div>
+    <textarea class="obs"></textarea>
+  </div>
+
+  <div class="item" data-item>Vazamento de óleo
+    <div class="buttons">
+      <div class="btn ok" onclick="select(this,'OK')">OK</div>
+      <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    </div>
+    <textarea class="obs"></textarea>
+  </div>
+
+  <div class="item" data-item>Vazamento diesel
+    <div class="buttons">
+      <div class="btn ok" onclick="select(this,'OK')">OK</div>
+      <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    </div>
+    <textarea class="obs"></textarea>
+  </div>
+
+  <div class="item" data-item>Fumaça
+    <div class="buttons">
+      <div class="btn ok" onclick="select(this,'OK')">OK</div>
+      <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    </div>
+    <textarea class="obs"></textarea>
+  </div>
+</div>
+</div>
+
+<!-- ELÉTRICO -->
+<div class="section">
+<h3 onclick="toggle(this)">💡 SISTEMA ELÉTRICO</h3>
+<div class="content hidden">
+  <div class="item" data-item>Painel<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Velocímetro<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Faróis<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Setas<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Buzina<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+</div>
+</div>
+
+<!-- CABINE -->
+<div class="section">
+<h3 onclick="toggle(this)">🚪 CABINE</h3>
+<div class="content hidden">
+  <div class="item" data-item>Limpeza<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Portas<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Bancos<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Vidros<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Retrovisores<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Extintor<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Cinto<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Câmeras<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+    <div class="btn na" onclick="select(this,'NA')">NA</div>
+  </div><textarea class="obs"></textarea></div>
+</div>
+</div>
+
+<!-- BAÚ -->
+<div class="section">
+<h3 onclick="toggle(this)">📦 BAÚ</h3>
+<div class="content hidden">
+  <div class="item" data-item>Portas<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Travas<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Iluminação<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Assoalho<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+
+  <div class="item" data-item>Limpeza<div class="buttons">
+    <div class="btn ok" onclick="select(this,'OK')">OK</div>
+    <div class="btn nc" onclick="select(this,'NC')">NC</div>
+  </div><textarea class="obs"></textarea></div>
+</div>
+</div>
+
+</div>
+
+<div class="section">
+<label>Observações Gerais</label>
+<textarea id="obsGeral"></textarea>
+</div>
+
+<button onclick="enviar()">ENVIAR CHECK-LIST</button>
+
+<script>
+// DATA / HORA
+const agora = new Date();
+const dataHora = agora.toLocaleString("pt-BR");
+document.getElementById("dataHora").innerText = dataHora;
+
+// NUMERAÇÃO AUTOMÁTICA
+let contador = localStorage.getItem("contadorChecklist");
+contador = contador ? parseInt(contador) + 1 : 1;
+localStorage.setItem("contadorChecklist", contador);
+const numeroChecklist = "CL-" + String(contador).padStart(5,"0");
+document.getElementById("numChecklist").innerText = numeroChecklist;
+
+// EMOJI
+function statusEmoji(s){
+  if(s==="OK") return "✅ OK";
+  if(s==="NC") return "❌ NC";
+  if(s==="NA") return "⚪ NA";
+}
+
+// CONTROLE
+const items = document.querySelectorAll('[data-item]');
+document.getElementById("progress").innerText = `0 / ${items.length} itens preenchidos`;
+
+function toggle(el){
+  el.nextElementSibling.classList.toggle("hidden");
+}
+
+function select(btn,val){
+  const item = btn.closest(".item");
+  item.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+
+  const obs = item.querySelector(".obs");
+  if(val==="NC"){
+    obs.style.display="block";
+    obs.required=true;
+  }else{
+    obs.style.display="none";
+    obs.required=false;
+    obs.value="";
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  let c=0;
+  items.forEach(i=>{
+    if(i.querySelector(".btn.active")) c++;
+  });
+  document.getElementById("progress").innerText = `${c} / ${items.length} itens preenchidos`;
+}
+
+// ENVIO WHATSAPP
+function enviar(){
+  for(let i of items){
+    if(!i.querySelector(".btn.active")){
+      alert("Preencha todos os itens");
+      return;
+    }
+    const obs=i.querySelector(".obs");
+    if(obs.required && !obs.value){
+      alert("Descreva os itens marcados como NC");
+      return;
+    }
+  }
+
+  let texto =
+`🚛 CHECK-LIST VEICULAR – ASR
+Nº: ${numeroChecklist}
+Data/Hora: ${dataHora}
+
+Condutor: ${condutor.value}
+Placa: ${placa.value}
+Hodômetro: ${hodometro.value}
+
+`;
+
+  items.forEach(i=>{
+    const nome=i.childNodes[0].textContent.trim();
+    const status=i.querySelector(".btn.active").innerText;
+    texto+=`${nome}: ${statusEmoji(status)}\n`;
+    if(i.querySelector(".obs").value)
+      texto+=`Obs: ${i.querySelector(".obs").value}\n`;
+  });
+
+  texto+=`\nObs Geral:\n${obsGeral.value}`;
+
+  window.open("https://wa.me/5575983594391?text="+encodeURIComponent(texto),"_blank");
+}
+</script>
+
+</body>
+</html>
